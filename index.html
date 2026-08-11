@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUB & SNACK IDOL｜アイドル</title>
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -62,11 +63,10 @@
   }
   .nav *{pointer-events:auto;}
   .nav-mark{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:22px;
-    letter-spacing:.18em;
-    color:var(--gold-bright);
+    display:flex; align-items:center;
+  }
+  .nav-mark img{
+    height:34px; width:auto; display:block;
   }
   .nav-links{
     display:flex; gap:34px;
@@ -401,7 +401,7 @@
 <body>
 
 <nav class="nav">
-  <div class="nav-mark">IDOL</div>
+  <div class="nav-mark"><img src="logo.png" alt="IDOL ロゴ"></div>
   <div class="nav-links">
     <a href="#about">CONCEPT</a>
     <a href="#gallery">ROOMS</a>
@@ -432,11 +432,11 @@
 
   <div class="about-grid">
     <div class="about-frame">
-      <p>ネオンの灯りと、<br>ビロードの椅子と、<br>いつもの一杯。</p>
+      <p>ネオンの灯りと、<br>ひとときの一杯と、<br>なじみの人と。</p>
     </div>
     <div class="about-copy">
       <p>IDOLは、西葛西で長くご愛顧いただいているパブ・スナックです。仕事帰りにふらりと立ち寄る一杯から、大切な人とのゆっくりした時間まで、その日の気分に合わせて過ごしていただけます。</p>
-      <p>青いビロードのソファが並ぶメインフロアと、落ち着いた色合いの奥座敷。同じ店の中に、少し違う二つの表情があります。どちらの席も、はじめての方にも常連の方にも、同じように寛いでいただけるようスタッフ一同ご用意しております。</p>
+      <p>おひとり様もお気軽にご利用いただけるカウンター席と、仲間とゆっくり過ごしたい日のVIP席。同じ店の中に、少し違う二つの表情があります。どちらの席も、はじめての方にも常連の方にも、同じように寛いでいただけるようスタッフ一同ご用意しております。</p>
       <p>「今日はちょっと疲れたな」という日にこそ、思い出していただけるお店でありたいと思っています。</p>
     </div>
   </div>
@@ -463,10 +463,10 @@
       </div>
     </div>
     <div class="room-card wine">
-      <img src="奥座敷.webp" alt="落ち着いた色合いの奥座敷ソファ席" loading="lazy">
+      <img src="奥座敷.webp" alt="落ち着いた雰囲気のVIP席ソファ席" loading="lazy">
       <div class="tag">
         <span class="en">Private Room</span>
-        <h3>奥座敷</h3>
+        <h3>VIP席</h3>
       </div>
     </div>
     <div class="room-card span2">
@@ -488,7 +488,7 @@
       <div class="icon" aria-hidden="true"><span></span></div>
       <h3>営業時間</h3>
       <p><strong>20:00 〜 close</strong></p>
-      <p>不定休</p>
+      <p>日曜日・月曜日定休</p>
     </div>
     <div class="info-card">
       <div class="icon" aria-hidden="true"><span></span></div>
