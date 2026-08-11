@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUB & SNACK IDOL｜アイドル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0b10;
+    --ink-2:#101319;
+    --velvet:#152a3c;
+    --velvet-2:#0f1f2c;
+    --wine:#42232c;
+    --wine-2:#2c1720;
+    --gold:#c9a13b;
+    --gold-bright:#ecd08a;
+    --gold-dim:#7a6329;
+    --neon:#ff3fa4;
+    --neon-soft:#ff8cc8;
+    --cream:#f2e9d8;
+    --muted:#a99a80;
+    --hair: rgba(201,161,59,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    line-height:1.85;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    margin:0;
+    letter-spacing:.06em;
+  }
+  .en{
+    font-family:'Cormorant Garamond', serif;
+  }
+  .neon-word{
+    font-family:'Yomogi', cursive;
+  }
+  a{color:inherit;}
+  img{display:block;max-width:100%;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    background:linear-gradient(to bottom, rgba(8,9,13,.85), rgba(8,9,13,0));
+    pointer-events:none;
+  }
+  .nav *{pointer-events:auto;}
+  .nav-mark{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:22px;
+    letter-spacing:.18em;
+    color:var(--gold-bright);
+  }
+  .nav-links{
+    display:flex; gap:34px;
+    font-size:13px;
+    letter-spacing:.15em;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color:var(--muted);
+    transition:color .3s;
+    padding-bottom:2px;
+    border-bottom:1px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{
+    color:var(--gold-bright);
+    border-color:var(--gold);
+  }
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:120px 6vw 80px;
+    isolation:isolate;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:-2;
+    background:
+      linear-gradient(180deg, rgba(8,9,13,.35) 0%, rgba(8,9,13,.55) 45%, var(--ink) 96%),
+      url('assets/bar-counter.jpg') center 30%/cover no-repeat;
+    filter:saturate(1.05) brightness(.85);
+  }
+  .hero-bg::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse at 50% 38%, rgba(255,63,164,.10), transparent 60%);
+  }
+  .eyebrow{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:.5em;
+    color:var(--gold-bright);
+    text-transform:uppercase;
+    margin-bottom:26px;
+    opacity:.9;
+  }
+  .badge{
+    position:relative;
+    width:min(78vw, 420px);
+    aspect-ratio:16/10.2;
+    margin:0 auto 30px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+  }
+  .badge img{
+    width:100%;height:100%;
+    object-fit:contain;
+    filter: drop-shadow(0 0 10px rgba(255,63,164,.5)) drop-shadow(0 0 30px rgba(201,161,59,.25));
+  }
+  .hero h1{
+    font-size:clamp(40px,7vw,72px);
+    color:var(--gold-bright);
+    text-shadow:0 0 34px rgba(201,161,59,.25);
+  }
+  .hero .sub{
+    margin-top:20px;
+    font-size:clamp(14px,1.6vw,17px);
+    color:var(--muted);
+    letter-spacing:.12em;
+  }
+  .hero .cta-row{
+    margin-top:46px;
+    display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 34px;
+    font-size:13px;
+    letter-spacing:.2em;
+    text-decoration:none;
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+    transition:background .35s, color .35s;
+    background:transparent;
+  }
+  .btn:hover, .btn:focus-visible{background:var(--gold); color:#1b1305;}
+  .btn.solid{background:var(--gold); color:#1b1305;}
+  .btn.solid:hover{background:var(--gold-bright);}
+  .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    width:1px; height:52px;
+    background:linear-gradient(var(--gold), transparent);
+  }
+  .scroll-cue::after{
+    content:"";
+    position:absolute; top:0; left:-2px;
+    width:5px; height:5px; border-radius:50%;
+    background:var(--gold-bright);
+    animation:drip 2.6s ease-in-out infinite;
+  }
+  @keyframes drip{
+    0%{top:0; opacity:1;}
+    85%{opacity:1;}
+    100%{top:100%; opacity:0;}
+  }
+
+  /* ---------- section shell ---------- */
+  section{
+    padding:120px 6vw;
+    position:relative;
+  }
+  .kicker{
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:20px;
+    justify-content:center;
+  }
+  .kicker .line{width:44px; height:1px; background:var(--gold);}
+  .kicker span{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    letter-spacing:.4em;
+    font-size:13px;
+    color:var(--gold-bright);
+    text-transform:uppercase;
+  }
+  .sec-title{
+    text-align:center;
+    font-size:clamp(28px,4vw,42px);
+    color:var(--cream);
+    margin-bottom:8px;
+  }
+  .sec-lead{
+    text-align:center;
+    max-width:640px;
+    margin:22px auto 0;
+    color:var(--muted);
+    font-size:15px;
+  }
+
+  /* ---------- about ---------- */
+  .about{background:var(--ink);}
+  .about-grid{
+    max-width:1080px; margin:70px auto 0;
+    display:grid; grid-template-columns:.9fr 1.1fr; gap:70px; align-items:center;
+  }
+  .about-frame{
+    position:relative;
+    border:1px solid var(--hair);
+    padding:44px 34px;
+  }
+  .about-frame::before, .about-frame::after{
+    content:""; position:absolute; width:20px; height:20px;
+    border:1px solid var(--gold);
+  }
+  .about-frame::before{top:-1px; left:-1px; border-right:none; border-bottom:none;}
+  .about-frame::after{bottom:-1px; right:-1px; border-left:none; border-top:none;}
+  .about-frame p{
+    font-family:'Shippori Mincho', serif;
+    font-size:20px;
+    color:var(--gold-bright);
+    line-height:2.1;
+    margin:0;
+  }
+  .about-copy p{
+    color:var(--cream);
+    font-size:15.5px;
+    margin:0 0 18px;
+  }
+  .about-copy p:last-child{margin-bottom:0;}
+  @media (max-width:800px){
+    .about-grid{grid-template-columns:1fr; gap:40px;}
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery{background:var(--ink-2);}
+  .gallery-grid{
+    max-width:1200px; margin:70px auto 0;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
+  }
+  .room-card{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    isolation:isolate;
+  }
+  .room-card img{
+    width:100%; height:100%; object-fit:cover;
+    transform:scale(1.02);
+    transition:transform .9s cubic-bezier(.2,.7,.2,1), filter .9s;
+    filter:saturate(1.05) brightness(.92);
+  }
+  .room-card:hover img{transform:scale(1.1);}
+  .room-card::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to top, rgba(8,9,13,.92) 0%, rgba(8,9,13,.15) 55%, transparent 80%);
+  }
+  .room-card .tag{
+    position:absolute; left:22px; bottom:22px; z-index:2;
+  }
+  .room-card .tag .en{
+    display:block;
+    font-style:italic; font-size:13px; letter-spacing:.3em;
+    color:var(--gold-bright); margin-bottom:6px;
+  }
+  .room-card .tag h3{
+    font-size:23px; color:var(--cream);
+  }
+  .room-card.wine .tag .en{color:#e8b9c4;}
+  .room-card.span2{grid-column:span 2;}
+  @media (max-width:900px){
+    .gallery-grid{grid-template-columns:1fr;}
+    .room-card.span2{grid-column:span 1;}
+  }
+
+  /* ---------- info / system ---------- */
+  .info{background:var(--velvet-2); position:relative;}
+  .info::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 15% 10%, rgba(201,161,59,.08), transparent 55%),
+      radial-gradient(ellipse at 85% 90%, rgba(255,63,164,.06), transparent 55%);
+    pointer-events:none;
+  }
+  .info-grid{
+    max-width:1080px; margin:70px auto 0;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--hair);
+    border:1px solid var(--hair);
+  }
+  .info-card{
+    background:var(--velvet-2);
+    padding:40px 30px;
+    text-align:center;
+  }
+  .info-card .icon{
+    width:34px; height:34px; margin:0 auto 22px;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .info-card .icon span{
+    width:8px; height:8px; background:var(--gold-bright); border-radius:1px;
+  }
+  .info-card h3{
+    color:var(--gold-bright); font-size:16px; letter-spacing:.15em; margin-bottom:16px;
+  }
+  .info-card p{
+    color:var(--muted); font-size:14px; margin:0 0 6px;
+  }
+  .info-card p strong{color:var(--cream); font-weight:500;}
+  .info-note{
+    max-width:720px; margin:36px auto 0;
+    text-align:center; font-size:12.5px; color:var(--gold-dim);
+    letter-spacing:.04em;
+  }
+  @media (max-width:800px){ .info-grid{grid-template-columns:1fr;} }
+
+  .map-wrap{
+    max-width:1080px; margin:44px auto 0;
+    border:1px solid var(--hair);
+    position:relative;
+  }
+  .map-wrap iframe{
+    width:100%; height:380px; display:block; border:0;
+    filter: invert(92%) hue-rotate(180deg) contrast(.9) brightness(.95);
+  }
+
+  /* ---------- staff ---------- */
+  .staff{
+    background:linear-gradient(180deg, var(--wine-2), var(--wine));
+  }
+  .staff .kicker{justify-content:center;}
+  .staff .sec-title{color:var(--cream); text-align:center;}
+  .staff .kicker span{color:var(--neon-soft);}
+  .staff .kicker .line{background:var(--neon-soft);}
+  .staff-grid{
+    max-width:1080px; margin:60px auto 0;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .staff-photo{
+    position:relative;
+    border:1px solid rgba(255,140,200,.35);
+    padding:10px;
+    text-align:center;
+  }
+  .staff-photo img{width:auto; max-width:100%; height:auto; display:inline-block; margin:0 auto;}
+  .staff-copy{
+    text-align:left;
+  }
+  .staff-copy p{
+    color:#e9d3d9; font-size:15px; margin:0 0 26px;
+  }
+  .staff .cta-row{justify-content:flex-start; margin-top:8px;}
+  .staff .btn{border-color:var(--neon-soft); color:#ffd7ea;}
+  .staff .btn:hover{background:var(--neon-soft); color:#3a0f22;}
+  .staff .btn.solid{background:var(--neon-soft); color:#3a0f22;}
+  @media (max-width:800px){
+    .staff-grid{grid-template-columns:1fr; gap:36px;}
+    .staff-copy{text-align:center;}
+    .staff .cta-row{justify-content:center;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--ink);
+    padding:70px 6vw 40px;
+    text-align:center;
+    border-top:1px solid var(--hair);
+  }
+  footer .foot-mark{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:24px; letter-spacing:.2em; color:var(--gold-bright);
+  }
+  footer .foot-sub{
+    margin-top:10px; font-size:12px; letter-spacing:.15em; color:var(--muted);
+  }
+  footer .foot-links{
+    margin-top:26px; display:flex; gap:26px; justify-content:center; font-size:12.5px;
+  }
+  footer .foot-links a{text-decoration:none; color:var(--muted);}
+  footer .foot-links a:hover{color:var(--gold-bright);}
+  footer .copyright{
+    margin-top:40px; font-size:11px; color:var(--gold-dim); letter-spacing:.08em;
+  }
+
+  ::selection{background:var(--gold); color:#1b1305;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-mark">IDOL</div>
+  <div class="nav-links">
+    <a href="#about">CONCEPT</a>
+    <a href="#gallery">ROOMS</a>
+    <a href="#info">SYSTEM</a>
+    <a href="#staff">STAFF</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="badge">
+    <img src="logo.png" alt="PUB & SNACK IDOL アイドル ロゴ">
+  </div>
+  <p class="sub en" style="font-style:italic;">— 西葛西の夜に、寛げる止まり木を —</p>
+
+  <div class="cta-row">
+    <a class="btn solid" href="#info">ご予約・お問い合わせ</a>
+    <a class="btn" href="#gallery">店内を見る</a>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true"></div>
+</header>
+
+<section class="about" id="about">
+  <div class="kicker"><span class="en">Concept</span></div>
+  <h2 class="sec-title">大人が、ひと息つける場所</h2>
+
+  <div class="about-grid">
+    <div class="about-frame">
+      <p>ネオンの灯りと、<br>ビロードの椅子と、<br>いつもの一杯。</p>
+    </div>
+    <div class="about-copy">
+      <p>IDOLは、西葛西で長くご愛顧いただいているパブ・スナックです。仕事帰りにふらりと立ち寄る一杯から、大切な人とのゆっくりした時間まで、その日の気分に合わせて過ごしていただけます。</p>
+      <p>青いビロードのソファが並ぶメインフロアと、落ち着いた色合いの奥座敷。同じ店の中に、少し違う二つの表情があります。どちらの席も、はじめての方にも常連の方にも、同じように寛いでいただけるようスタッフ一同ご用意しております。</p>
+      <p>「今日はちょっと疲れたな」という日にこそ、思い出していただけるお店でありたいと思っています。</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="kicker"><span class="en">Rooms &amp; Bar</span></div>
+  <h2 class="sec-title">店内のご紹介</h2>
+  <p class="sec-lead">同じ店内にある、二つの部屋。その日の気分でお選びいただけます。</p>
+
+  <div class="gallery-grid">
+    <div class="room-card span2">
+      <img src="カウンター席.webp" alt="花で彩られたバーカウンターとブルーのビロードチェア" loading="lazy">
+      <div class="tag">
+        <span class="en">Bar Counter</span>
+        <h3>カウンター席</h3>
+      </div>
+    </div>
+    <div class="room-card">
+      <img src="メインフロア.webp" alt="ブルーのビロードソファが並ぶメインフロア" loading="lazy">
+      <div class="tag">
+        <span class="en">Main Floor</span>
+        <h3>メインフロア</h3>
+      </div>
+    </div>
+    <div class="room-card wine">
+      <img src="奥座敷.webp" alt="落ち着いた色合いの奥座敷ソファ席" loading="lazy">
+      <div class="tag">
+        <span class="en">Private Room</span>
+        <h3>奥座敷</h3>
+      </div>
+    </div>
+    <div class="room-card span2">
+      <img src="店の入口.jpg" alt="IDOLの看板が灯る外観" loading="lazy">
+      <div class="tag">
+        <span class="en">Entrance</span>
+        <h3>店の入り口</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info" id="info">
+  <div class="kicker"><span class="en">System &amp; Access</span></div>
+  <h2 class="sec-title">ご来店にあたって</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon" aria-hidden="true"><span></span></div>
+      <h3>営業時間</h3>
+      <p><strong>20:00 〜 close</strong></p>
+      <p>不定休</p>
+    </div>
+    <div class="info-card">
+      <div class="icon" aria-hidden="true"><span></span></div>
+      <h3>ご予約</h3>
+      <p><strong>03-3675-3016</strong></p>
+      <p>20時以降にお電話ください</p>
+    </div>
+    <div class="info-card">
+      <div class="icon" aria-hidden="true"><span></span></div>
+      <h3>アクセス</h3>
+      <p><strong>〒134-0088</strong></p>
+      <p>東京都江戸川区西葛西7丁目12−12 B1</p>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B1%9F%E6%88%B8%E5%B7%9D%E5%8C%BA%E8%A5%BF%E8%91%9B%E8%A5%BF7%E4%B8%81%E7%9B%AE12%E2%88%9212&output=embed"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      title="IDOL 所在地マップ">
+    </iframe>
+  </div>
+
+  <p class="info-note">※ 営業時間・料金システムは仮の内容です。確定した情報にあわせて後ほど差し替えます。</p>
+</section>
+
+<section class="staff" id="staff">
+  <div class="kicker"><span class="en">Recruit</span></div>
+  <h2 class="sec-title">カウンターレディ募集</h2>
+  <div class="staff-grid">
+    <div class="staff-photo">
+      <img src="recruit.jpg" alt="カウンターレディ募集の案内" loading="lazy">
+    </div>
+    <div class="staff-copy">
+      <p>未経験の方も大歓迎。体験入店OKです。時給は面談のうえ優遇いたします。週1日・月1日からの勤務も相談可能です。まずはお気軽にご連絡ください。</p>
+      <div class="cta-row">
+        <a class="btn solid" href="tel:0336753016">お電話でお問い合わせ</a>
+        <a class="btn" href="https://lin.ee/U2WnlqJ" target="_blank" rel="noopener">LINEで友だち登録</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark">IDOL</div>
+  <div class="foot-sub">PUB &amp; SNACK — COMFORTABLE SPACE</div>
+  <div class="foot-links">
+    <a href="#about">CONCEPT</a>
+    <a href="#gallery">ROOMS</a>
+    <a href="#info">SYSTEM</a>
+    <a href="#staff">STAFF</a>
+  </div>
+  <div class="copyright">© IDOL — Draft site, not for public release</div>
+</footer>
+
+</body>
+</html>
