@@ -64,9 +64,23 @@
   .nav *{pointer-events:auto;}
   .nav-mark{
     display:flex; align-items:center;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:22px;
+    letter-spacing:.18em;
+    color:var(--gold-bright);
+    text-decoration:none;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(-6px);
+    transition: opacity .5s ease, transform .5s ease, color .3s;
   }
-  .nav-mark img{
-    height:34px; width:auto; display:block;
+  .nav-mark.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .nav-mark:hover, .nav-mark:focus-visible{
+    color:var(--cream);
   }
   .nav-links{
     display:flex; gap:34px;
@@ -129,6 +143,10 @@
     width:100%;height:100%;
     object-fit:contain;
     filter: drop-shadow(0 0 10px rgba(255,63,164,.5)) drop-shadow(0 0 30px rgba(201,161,59,.25));
+    transform: scale(var(--logo-scale, 1)) translateY(var(--logo-shift, 0px));
+    opacity: var(--logo-opacity, 1);
+    will-change: transform, filter, opacity;
+    transition: filter .12s linear;
   }
   .hero h1{
     font-size:clamp(40px,7vw,72px);
@@ -280,9 +298,66 @@
   }
   .room-card.wine .tag .en{color:#e8b9c4;}
   .room-card.span2{grid-column:span 2;}
+  .room-card{cursor:zoom-in;}
   @media (max-width:900px){
     .gallery-grid{grid-template-columns:1fr;}
     .room-card.span2{grid-column:span 1;}
+  }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(6,7,10,.94);
+    display:flex; align-items:center; justify-content:center;
+    padding:6vh 5vw;
+    opacity:0; visibility:hidden;
+    transition:opacity .3s ease;
+  }
+  .lightbox.is-open{
+    opacity:1; visibility:visible;
+  }
+  .lightbox-inner{
+    position:relative;
+    max-width:min(1100px, 90vw);
+    max-height:88vh;
+    display:flex; flex-direction:column; align-items:center;
+    transform:scale(.96);
+    transition:transform .3s ease;
+  }
+  .lightbox.is-open .lightbox-inner{
+    transform:scale(1);
+  }
+  .lightbox img{
+    max-width:100%;
+    max-height:78vh;
+    width:auto; height:auto;
+    object-fit:contain;
+    border:1px solid var(--hair);
+  }
+  .lightbox-caption{
+    margin-top:18px;
+    text-align:center;
+    color:var(--gold-bright);
+    font-family:'Shippori Mincho', serif;
+    font-size:17px;
+    letter-spacing:.08em;
+  }
+  .lightbox-close{
+    position:absolute; top:-52px; right:0;
+    width:40px; height:40px;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold-bright);
+    font-size:20px; line-height:1;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .3s, color .3s;
+  }
+  .lightbox-close:hover, .lightbox-close:focus-visible{
+    background:var(--gold); color:#1b1305;
+  }
+  @media (max-width:700px){
+    .lightbox-close{ top:auto; bottom:-52px; right:0; }
   }
 
   /* ---------- info / system ---------- */
@@ -362,10 +437,24 @@
   .staff-copy p{
     color:#e9d3d9; font-size:15px; margin:0 0 26px;
   }
-  .staff .cta-row{justify-content:flex-start; margin-top:8px;}
-  .staff .btn{border-color:var(--neon-soft); color:#ffd7ea;}
+  .staff .cta-row{justify-content:flex-start; margin-top:8px; gap:16px;}
+  .staff .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    min-width:216px;
+    border-color:var(--neon-soft); color:var(--cream);
+    background:rgba(255,140,200,.06);
+    font-weight:500;
+  }
+  .staff .btn svg{ width:16px; height:16px; flex-shrink:0; }
   .staff .btn:hover{background:var(--neon-soft); color:#3a0f22;}
-  .staff .btn.solid{background:var(--neon-soft); color:#3a0f22;}
+  .staff .btn.solid{
+    background:var(--neon-soft); color:#3a0f22; border-color:var(--neon-soft);
+  }
+  .staff .btn.solid:hover{background:#ffd7ea; border-color:#ffd7ea;}
+  @media (max-width:480px){
+    .staff .cta-row{ flex-direction:column; align-items:stretch; }
+    .staff .btn{ min-width:0; width:100%; }
+  }
   @media (max-width:800px){
     .staff-grid{grid-template-columns:1fr; gap:36px;}
     .staff-copy{text-align:center;}
@@ -401,7 +490,7 @@
 <body>
 
 <nav class="nav">
-  <div class="nav-mark"><img src="logo.png" alt="IDOL ロゴ"></div>
+  <a href="#top" class="nav-mark" id="navMark">IDOL</a>
   <div class="nav-links">
     <a href="#about">CONCEPT</a>
     <a href="#gallery">ROOMS</a>
@@ -410,10 +499,10 @@
   </div>
 </nav>
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="hero-bg" aria-hidden="true"></div>
 
-  <div class="badge">
+  <div class="badge" id="heroBadge">
     <img src="logo.png" alt="PUB & SNACK IDOL アイドル ロゴ">
   </div>
   <p class="sub en" style="font-style:italic;">— 西葛西の夜に、寛げる止まり木を —</p>
@@ -525,12 +614,26 @@
     <div class="staff-copy">
       <p>未経験の方も大歓迎。体験入店OKです。時給は面談のうえ優遇いたします。週1日・月1日からの勤務も相談可能です。まずはお気軽にご連絡ください。</p>
       <div class="cta-row">
-        <a class="btn solid" href="tel:0336753016">お電話でお問い合わせ</a>
-        <a class="btn" href="https://lin.ee/U2WnlqJ" target="_blank" rel="noopener">LINEで友だち登録</a>
+        <a class="btn solid" href="tel:0336753016">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.5c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8z"/></svg>
+          お電話でお問い合わせ
+        </a>
+        <a class="btn" href="https://lin.ee/U2WnlqJ" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.69 2 10.2c0 4.02 3.58 7.39 8.42 8.06.33.07.77.22.88.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .87.55 1.08-.46 5.8-3.42 7.92-5.85C21.5 13.6 22 12 22 10.2 22 5.69 17.52 2 12 2zM8.5 12.9H6.9a.4.4 0 0 1-.4-.4V8.3c0-.22.18-.4.4-.4s.4.18.4.4v3.8h1.2c.22 0 .4.18.4.4s-.18.4-.4.4zm2.1-.4c0 .22-.18.4-.4.4s-.4-.18-.4-.4V8.3c0-.22.18-.4.4-.4s.4.18.4.4v4.2zm4.7 0c0 .18-.11.33-.28.38-.04.02-.09.02-.13.02-.14 0-.27-.07-.34-.19l-2-2.7v2.49c0 .22-.18.4-.4.4s-.4-.18-.4-.4V8.3c0-.18.11-.33.28-.38.04-.01.09-.02.13-.02.13 0 .26.07.33.18l2 2.71V8.3c0-.22.18-.4.4-.4s.4.18.4.4v4.2zm3.4-3.4h-1.6v1h1.6c.22 0 .4.18.4.4s-.18.4-.4.4h-1.6v1h1.6c.22 0 .4.18.4.4s-.18.4-.4.4H16.5a.4.4 0 0 1-.4-.4V8.3c0-.22.18-.4.4-.4h2.2c.22 0 .4.18.4.4s-.18.4-.4.4z"/></svg>
+          LINEで友だち登録
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="閉じる">×</button>
+    <img id="lightboxImg" src="" alt="">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
 
 <footer>
   <div class="foot-mark">IDOL</div>
@@ -543,6 +646,125 @@
   </div>
   <div class="copyright">© IDOL — Draft site, not for public release</div>
 </footer>
+
+<script>
+(function(){
+  var badge = document.getElementById('heroBadge');
+  var badgeImg = badge ? badge.querySelector('img') : null;
+  var navMark = document.getElementById('navMark');
+  var hero = document.querySelector('.hero');
+  if(!badgeImg || !hero) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ticking = false;
+
+  function update(){
+    ticking = false;
+    var heroHeight = hero.offsetHeight || window.innerHeight;
+    var raw = window.scrollY / (heroHeight * 0.55);
+    var progress = Math.min(Math.max(raw, 0), 1);
+
+    if(reduceMotion){
+      badgeImg.style.setProperty('--logo-scale', 1);
+      badgeImg.style.setProperty('--logo-opacity', 1);
+      badgeImg.style.setProperty('--logo-shift', '0px');
+      badgeImg.style.filter = 'drop-shadow(0 0 10px rgba(255,63,164,.5)) drop-shadow(0 0 30px rgba(201,161,59,.25))';
+    } else {
+      var blur = 5 * (1 - progress);
+      var glowPink = 6 + 14 * progress;
+      var glowGold = 14 + 26 * progress;
+      var scale = 1.1 - 0.1 * progress;
+      var shift = -6 * progress;
+
+      badgeImg.style.setProperty('--logo-scale', scale.toFixed(3));
+      badgeImg.style.setProperty('--logo-opacity', (0.55 + 0.45 * progress).toFixed(3));
+      badgeImg.style.setProperty('--logo-shift', shift.toFixed(2) + 'px');
+      badgeImg.style.filter =
+        'blur(' + blur.toFixed(2) + 'px) ' +
+        'drop-shadow(0 0 ' + glowPink.toFixed(1) + 'px rgba(255,63,164,' + (0.35 + 0.35 * progress).toFixed(2) + ')) ' +
+        'drop-shadow(0 0 ' + glowGold.toFixed(1) + 'px rgba(201,161,59,' + (0.15 + 0.2 * progress).toFixed(2) + '))';
+    }
+
+    if(navMark){
+      if(window.scrollY > heroHeight * 0.35){
+        navMark.classList.add('is-visible');
+      } else {
+        navMark.classList.remove('is-visible');
+      }
+    }
+  }
+
+  function onScroll(){
+    if(!ticking){
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+(function(){
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxCaption = document.getElementById('lightboxCaption');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var cards = document.querySelectorAll('.room-card');
+  if(!lightbox || !cards.length) return;
+
+  var lastFocused = null;
+
+  function openLightbox(img, title){
+    lastFocused = document.activeElement;
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.alt = img.alt || '';
+    lightboxCaption.textContent = title || '';
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+    if(lastFocused) lastFocused.focus();
+  }
+
+  cards.forEach(function(card){
+    var img = card.querySelector('img');
+    var title = card.querySelector('.tag h3');
+    if(!img) return;
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', (title ? title.textContent : '') + ' の画像を大きく表示');
+
+    card.addEventListener('click', function(){
+      openLightbox(img, title ? title.textContent : '');
+    });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openLightbox(img, title ? title.textContent : '');
+      }
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox){ closeLightbox(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lightbox.classList.contains('is-open')){
+      closeLightbox();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
