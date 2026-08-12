@@ -407,17 +407,41 @@
     .about-grid{grid-template-columns:1fr; gap:40px;}
   }
 
-  /* ---------- gallery ---------- */
+  /* ---------- gallery / rooms carousel ---------- */
   .gallery{background:var(--ink-2);}
-  .gallery-grid{
+  .carousel-wrap{
+    position:relative;
     max-width:1200px; margin:70px auto 0;
-    display:grid; grid-template-columns:repeat(3,1fr); gap:26px;
+    --slide-w:min(560px, 74vw);
   }
+  .carousel-track{
+    display:flex;
+    gap:24px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:6px calc(50% - (var(--slide-w) / 2));
+  }
+  .carousel-track::-webkit-scrollbar{display:none;}
   .room-card{
     position:relative;
     overflow:hidden;
-    aspect-ratio:4/5;
     isolation:isolate;
+    cursor:zoom-in;
+  }
+  .carousel-track .room-card{
+    flex:0 0 auto;
+    width:var(--slide-w);
+    aspect-ratio:4/5;
+    scroll-snap-align:center;
+    opacity:.4;
+    transform:scale(.86);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .carousel-track .room-card.is-active{
+    opacity:1;
+    transform:scale(1);
   }
   .room-card img{
     width:100%; height:100%; object-fit:cover;
@@ -442,11 +466,32 @@
     font-size:23px; color:var(--cream);
   }
   .room-card.wine .tag .en{color:#e8b9c4;}
-  .room-card.span2{grid-column:span 2;}
-  .room-card{cursor:zoom-in;}
-  @media (max-width:900px){
-    .gallery-grid{grid-template-columns:1fr;}
-    .room-card.span2{grid-column:span 1;}
+
+  .carousel-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    z-index:5;
+    width:44px; height:44px; border-radius:50%;
+    border:1px solid var(--gold); background:rgba(8,9,13,.6);
+    color:var(--gold-bright); font-size:24px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .3s, color .3s;
+  }
+  .carousel-arrow:hover{ background:var(--gold); color:#1b1305; }
+  .carousel-arrow.prev{ left:2px; }
+  .carousel-arrow.next{ right:2px; }
+  .carousel-dots{
+    display:flex; justify-content:center; gap:10px; margin-top:26px;
+  }
+  .carousel-dot{
+    width:8px; height:8px; border-radius:50%; padding:0; border:none;
+    background:var(--hair); cursor:pointer;
+    transition:background .3s, transform .3s;
+  }
+  .carousel-dot.is-active{ background:var(--gold-bright); transform:scale(1.3); }
+
+  @media (max-width:700px){
+    .carousel-arrow{ width:36px; height:36px; font-size:19px; }
+    .carousel-wrap{ --slide-w:min(420px, 78vw); }
   }
 
   /* ---------- lightbox ---------- */
@@ -546,6 +591,13 @@
     letter-spacing:.04em;
   }
   @media (max-width:800px){ .info-grid{grid-template-columns:1fr;} }
+  @media (max-width:600px){
+    .info-card{padding:38px 26px;}
+    .info-card .icon{width:46px; height:46px; margin:0 auto 20px;}
+    .info-card .icon svg{width:21px; height:21px;}
+    .info-card h3{font-size:22px; margin-bottom:18px;}
+    .info-card p{font-size:18px; margin:0 0 8px;}
+  }
 
   .map-wrap{
     max-width:1080px; margin:44px auto 0;
@@ -708,35 +760,40 @@
   <h2 class="sec-title">店内のご紹介</h2>
   <p class="sec-lead">同じ店内にある、二つの部屋。その日の気分でお選びいただけます。</p>
 
-  <div class="gallery-grid">
-    <div class="room-card span2">
-      <img src="カウンター席.webp" alt="西葛西のパブ・スナック IDOL 花で彩られたバーカウンターとブルーのビロードチェア" loading="lazy">
-      <div class="tag">
-        <span class="en">Bar Counter</span>
-        <h3>カウンター席</h3>
+  <div class="carousel-wrap">
+    <button class="carousel-arrow prev" id="carouselPrev" type="button" aria-label="前の画像">‹</button>
+    <div class="carousel-track" id="carouselTrack">
+      <div class="room-card">
+        <img src="カウンター席.webp" alt="西葛西のパブ・スナック IDOL 花で彩られたバーカウンターとブルーのビロードチェア" loading="lazy">
+        <div class="tag">
+          <span class="en">Bar Counter</span>
+          <h3>カウンター席</h3>
+        </div>
+      </div>
+      <div class="room-card">
+        <img src="メインフロア.webp" alt="ブルーのビロードソファが並ぶメインフロア" loading="lazy">
+        <div class="tag">
+          <span class="en">Main Floor</span>
+          <h3>メインフロア</h3>
+        </div>
+      </div>
+      <div class="room-card wine">
+        <img src="奥座敷.webp" alt="落ち着いた雰囲気のVIP席ソファ席" loading="lazy">
+        <div class="tag">
+          <span class="en">Private Room</span>
+          <h3>VIP席</h3>
+        </div>
+      </div>
+      <div class="room-card">
+        <img src="店の入口.jpg" alt="IDOLの看板が灯る外観" loading="lazy">
+        <div class="tag">
+          <span class="en">Entrance</span>
+          <h3>店の入り口</h3>
+        </div>
       </div>
     </div>
-    <div class="room-card">
-      <img src="メインフロア.webp" alt="ブルーのビロードソファが並ぶメインフロア" loading="lazy">
-      <div class="tag">
-        <span class="en">Main Floor</span>
-        <h3>メインフロア</h3>
-      </div>
-    </div>
-    <div class="room-card wine">
-      <img src="奥座敷.webp" alt="落ち着いた雰囲気のVIP席ソファ席" loading="lazy">
-      <div class="tag">
-        <span class="en">Private Room</span>
-        <h3>VIP席</h3>
-      </div>
-    </div>
-    <div class="room-card span2">
-      <img src="店の入口.jpg" alt="IDOLの看板が灯る外観" loading="lazy">
-      <div class="tag">
-        <span class="en">Entrance</span>
-        <h3>店の入り口</h3>
-      </div>
-    </div>
+    <button class="carousel-arrow next" id="carouselNext" type="button" aria-label="次の画像">›</button>
+    <div class="carousel-dots" id="carouselDots"></div>
   </div>
 </section>
 
@@ -773,7 +830,6 @@
     </iframe>
   </div>
 
-  <p class="info-note">※ 営業時間・料金システムは仮の内容です。確定した情報にあわせて後ほど差し替えます。</p>
 </section>
 
 <section class="staff" id="staff">
@@ -877,6 +933,78 @@
       closeLightbox();
     }
   });
+
+  // ---- rooms carousel ----
+  var track = document.getElementById('carouselTrack');
+  if(track){
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.room-card'));
+    var dotsWrap = document.getElementById('carouselDots');
+    var prevBtn = document.getElementById('carouselPrev');
+    var nextBtn = document.getElementById('carouselNext');
+    var activeIndex = 0;
+    var autoTimer = null;
+    var resumeTimer = null;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'carousel-dot';
+      dot.setAttribute('aria-label', (i + 1) + '枚目の画像へ');
+      dot.addEventListener('click', function(){ pauseAuto(); goTo(i); });
+      dotsWrap.appendChild(dot);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function updateActive(){
+      var trackRect = track.getBoundingClientRect();
+      var center = trackRect.left + trackRect.width / 2;
+      var closest = 0, minDist = Infinity;
+      slides.forEach(function(slide, i){
+        var r = slide.getBoundingClientRect();
+        var dist = Math.abs((r.left + r.width / 2) - center);
+        if(dist < minDist){ minDist = dist; closest = i; }
+      });
+      activeIndex = closest;
+      slides.forEach(function(s, i){ s.classList.toggle('is-active', i === closest); });
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === closest); });
+    }
+
+    function goTo(i){
+      var target = slides[(i + slides.length) % slides.length];
+      target.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+
+    function stopAuto(){
+      if(autoTimer){ clearInterval(autoTimer); autoTimer = null; }
+    }
+    function startAuto(){
+      stopAuto();
+      autoTimer = setInterval(function(){ goTo(activeIndex + 1); }, 4500);
+    }
+    function pauseAuto(){
+      stopAuto();
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(startAuto, 6000);
+    }
+
+    var scrollTimer;
+    track.addEventListener('scroll', function(){
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(updateActive, 80);
+    }, {passive:true});
+
+    if(prevBtn){ prevBtn.addEventListener('click', function(){ pauseAuto(); goTo(activeIndex - 1); }); }
+    if(nextBtn){ nextBtn.addEventListener('click', function(){ pauseAuto(); goTo(activeIndex + 1); }); }
+    track.addEventListener('pointerdown', pauseAuto);
+    track.addEventListener('touchstart', pauseAuto, {passive:true});
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ stopAuto(); } else { startAuto(); }
+    });
+
+    updateActive();
+    startAuto();
+  }
 
   // ---- mobile nav menu ----
   var navToggle = document.getElementById('navToggle');
