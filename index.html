@@ -418,9 +418,10 @@
     display:flex;
     gap:24px;
     overflow-x:auto;
-    scroll-snap-type:x mandatory;
+    scroll-snap-type:x proximity;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
+    touch-action:pan-x;
     padding:6px calc(50% - (var(--slide-w) / 2));
   }
   .carousel-track::-webkit-scrollbar{display:none;}
