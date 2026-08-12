@@ -6,7 +6,7 @@
 <title>PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック</title>
 <meta name="description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。お仕事帰りの一杯から特別なひとときまで、寛げる大人の止まり木です。">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://idol-theta.vercel.app/">
+<link rel="canonical" href="https://idol-nishikasai.vercel.app/">
 <link rel="icon" type="image/png" href="favicon.png">
 
 <!-- OGP -->
@@ -14,15 +14,15 @@
 <meta property="og:site_name" content="PUB & SNACK IDOL">
 <meta property="og:title" content="PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック">
 <meta property="og:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。お仕事帰りの一杯から特別なひとときまで、寛げる大人の止まり木です。">
-<meta property="og:url" content="https://idol-theta.vercel.app/">
-<meta property="og:image" content="https://idol-theta.vercel.app/店の入口.jpg">
+<meta property="og:url" content="https://idol-nishikasai.vercel.app/">
+<meta property="og:image" content="https://idol-nishikasai.vercel.app/店の入口.jpg">
 <meta property="og:locale" content="ja_JP">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック">
 <meta name="twitter:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。">
-<meta name="twitter:image" content="https://idol-theta.vercel.app/店の入口.jpg">
+<meta name="twitter:image" content="https://idol-nishikasai.vercel.app/店の入口.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -32,8 +32,8 @@
   "@type": "BarOrPub",
   "name": "PUB & SNACK IDOL",
   "alternateName": "アイドルー",
-  "image": "https://mayuzumi666.github.io/idol/店の入口.jpg",
-  "url": "https://mayuzumi666.github.io/idol/",
+  "image": "https://idol-nishikasai.vercel.app/店の入口.jpg",
+  "url": "https://idol-nishikasai.vercel.app/",
   "telephone": "+81-3-3675-3016",
   "priceRange": "¥¥",
   "address": {
@@ -151,6 +151,83 @@
     border-color:var(--gold);
   }
   @media (max-width:760px){ .nav-links{display:none;} }
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:34px; height:34px;
+    padding:0;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%; height:1.5px;
+    background:var(--gold-bright);
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+  @media (max-width:760px){ .nav-toggle{display:flex;} }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:90;
+    display:flex; justify-content:flex-end;
+    background:rgba(6,7,10,0);
+    visibility:hidden;
+    transition:background .35s ease, visibility .35s ease;
+    pointer-events:none;
+  }
+  .mobile-menu.is-open{
+    background:rgba(6,7,10,.75);
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .mobile-menu-panel{
+    position:relative;
+    width:min(58vw, 240px);
+    height:100%;
+    background:var(--ink-2);
+    border-left:1px solid var(--hair);
+    display:flex; flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:34px;
+    transform:translateX(100%);
+    transition:transform .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .mobile-menu.is-open .mobile-menu-panel{
+    transform:translateX(0);
+  }
+  .mobile-menu-panel a{
+    text-decoration:none;
+    color:var(--muted);
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:20px;
+    letter-spacing:.2em;
+    transition:color .3s;
+  }
+  .mobile-menu-panel a:hover, .mobile-menu-panel a:focus-visible{
+    color:var(--gold-bright);
+  }
+  .mobile-menu-close{
+    position:absolute; top:24px; right:24px;
+    width:40px; height:40px;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold-bright);
+    font-size:20px; line-height:1;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .3s, color .3s;
+  }
+  .mobile-menu-close:hover, .mobile-menu-close:focus-visible{
+    background:var(--gold); color:#1b1305;
+  }
 
   /* ---------- hero ---------- */
   .hero{
@@ -578,7 +655,20 @@
     <a href="#info">SYSTEM</a>
     <a href="#staff">STAFF</a>
   </div>
+  <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="メニューを開く">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-panel">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="閉じる">×</button>
+    <a href="#about">CONCEPT</a>
+    <a href="#gallery">ROOMS</a>
+    <a href="#info">SYSTEM</a>
+    <a href="#staff">STAFF</a>
+  </div>
+</div>
 
 <header class="hero" id="top">
   <div class="hero-bg" aria-hidden="true"></div>
@@ -787,6 +877,38 @@
       closeLightbox();
     }
   });
+
+  // ---- mobile nav menu ----
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileMenuClose = document.getElementById('mobileMenuClose');
+  if(navToggle && mobileMenu){
+    function openMenu(){
+      mobileMenu.classList.add('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu(){
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    navToggle.addEventListener('click', function(){
+      if(mobileMenu.classList.contains('is-open')){ closeMenu(); } else { openMenu(); }
+    });
+    if(mobileMenuClose){ mobileMenuClose.addEventListener('click', closeMenu); }
+    mobileMenu.addEventListener('click', function(e){
+      if(e.target === mobileMenu){ closeMenu(); }
+    });
+    Array.prototype.forEach.call(mobileMenu.querySelectorAll('a'), function(a){
+      a.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && mobileMenu.classList.contains('is-open')){ closeMenu(); }
+    });
+  }
 })();
 </script>
 
