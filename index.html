@@ -837,7 +837,7 @@
   <h2 class="sec-title">カウンターレディ募集</h2>
   <div class="staff-grid">
     <div class="staff-photo">
-      <img src="recruit.jpg" alt="カウンターレディ募集の案内" loading="lazy">
+      <img src="recruit.webp" alt="カウンターレディ募集の案内" loading="lazy">
     </div>
     <div class="staff-copy">
       <p>未経験の方も大歓迎。体験入店OKです。時給は面談のうえ優遇いたします。週1日・月1日からの勤務も相談可能です。まずはお気軽にご連絡ください。</p>
@@ -970,8 +970,9 @@
     }
 
     function goTo(i){
-      var target = slides[(i + slides.length) % slides.length];
-      target.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+      var slide = slides[(i + slides.length) % slides.length];
+      var left = slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2;
+      track.scrollTo({left: left, behavior:'smooth'});
     }
 
     function stopAuto(){
