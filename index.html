@@ -773,7 +773,7 @@
       <p>ネオンの灯りと、<br>ひとときの一杯と、<br>なじみの人と。</p>
     </div>
     <div class="about-copy">
-      <p>IDOLは、東京都江戸川区・西葛西駅周辺で長くご愛顧いただいているパブ・スナックです。仕事帰りにふらりと立ち寄る一杯から、大切な人とのゆっくりした時間まで、その日の気分に合わせて過ごしていただけます。</p>
+      <p>アイドルーは、東京都江戸川区・西葛西駅周辺で長くご愛顧いただいているパブ・スナックです。仕事帰りにふらりと立ち寄る一杯から、大切な人とのゆっくりした時間まで、その日の気分に合わせて過ごしていただけます。</p>
       <p>おひとり様もお気軽にご利用いただけるカウンター席と、仲間とゆっくり過ごしたい日のVIP席。同じ店の中に、少し違う二つの表情があります。どちらの席も、はじめての方にも常連の方にも、同じように寛いでいただけるようスタッフ一同ご用意しております。</p>
       <p>盛り上がりたい夜は、自慢のDAMカラオケでとことん歌って発散するのもおすすめです。2次会や仲間内の打ち上げにもぴったりの一軒です。</p>
       <p>「今日はちょっと疲れたな」という日にこそ、思い出していただけるお店でありたいと思っています。</p>
@@ -784,7 +784,7 @@
 <section class="gallery" id="gallery">
   <div class="kicker"><span class="en">Rooms &amp; Bar</span></div>
   <h2 class="sec-title">店内のご紹介</h2>
-  <p class="sec-lead">同じ店内にある、二つの部屋。その日の気分でお選びいただけます。</p>
+  <p class="sec-lead">店内のさまざまな表情を、その日の気分でお選びいただけます。</p>
 
   <div class="carousel-wrap">
     <button class="carousel-arrow prev" id="carouselPrev" type="button" aria-label="前の画像">‹</button>
@@ -910,8 +910,13 @@
     <a href="#info">SYSTEM</a>
     <a href="#staff">RECRUIT</a>
   </div>
-  <div class="copyright">© IDOL</div>
+  <div class="copyright">© <span id="copyYear">2026</span> IDOL</div>
 </footer>
+
+<script>
+  var copyYearEl = document.getElementById('copyYear');
+  if(copyYearEl){ copyYearEl.textContent = new Date().getFullYear(); }
+</script>
 
 <script>
 (function(){
