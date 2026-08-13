@@ -478,7 +478,7 @@
     line-height:1.5;
   }
   .room-card.wine .tag .en{color:#e8b9c4;}
-  .room-card .zoom-hint{
+  .zoom-hint{
     position:absolute; top:14px; right:14px; z-index:3;
     width:32px; height:32px; border-radius:50%;
     background:rgba(8,9,13,.55);
@@ -487,7 +487,7 @@
     display:flex; align-items:center; justify-content:center;
     pointer-events:none;
   }
-  .room-card .zoom-hint svg{ width:16px; height:16px; }
+  .zoom-hint svg{ width:16px; height:16px; }
 
   .carousel-arrow{
     position:absolute; top:50%; transform:translateY(-50%);
@@ -607,6 +607,8 @@
     color:var(--muted); font-size:16px; margin:0 0 6px;
   }
   .info-card p strong{color:var(--cream); font-weight:500;}
+  .info-tel-link{color:inherit; text-decoration:none;}
+  .info-tel-link:hover, .info-tel-link:focus-visible{color:var(--gold-bright);}
   .info-note{
     max-width:720px; margin:36px auto 0;
     text-align:center; font-size:12.5px; color:var(--gold-dim);
@@ -648,6 +650,7 @@
     border:1px solid rgba(255,140,200,.35);
     padding:10px;
     text-align:center;
+    cursor:zoom-in;
   }
   .staff-photo img{width:auto; max-width:100%; height:auto; display:inline-block; margin:0 auto;}
   .staff-copy{
@@ -727,7 +730,7 @@
     <a href="#about">CONCEPT</a>
     <a href="#gallery">ROOMS</a>
     <a href="#info">SYSTEM</a>
-    <a href="#staff">STAFF</a>
+    <a href="#staff">RECRUIT</a>
   </div>
   <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="メニューを開く">
     <span></span><span></span><span></span>
@@ -740,7 +743,7 @@
     <a href="#about">CONCEPT</a>
     <a href="#gallery">ROOMS</a>
     <a href="#info">SYSTEM</a>
-    <a href="#staff">STAFF</a>
+    <a href="#staff">RECRUIT</a>
   </div>
 </div>
 
@@ -846,7 +849,7 @@
     <div class="info-card">
       <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.5c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8z"/></svg></div>
       <h3>ご予約</h3>
-      <p><strong>03-3675-3016</strong></p>
+      <p><strong><a href="tel:0336753016" class="info-tel-link">03-3675-3016</a></strong></p>
       <p>20時以降にお電話ください</p>
     </div>
     <div class="info-card">
@@ -905,7 +908,7 @@
     <a href="#about">CONCEPT</a>
     <a href="#gallery">ROOMS</a>
     <a href="#info">SYSTEM</a>
-    <a href="#staff">STAFF</a>
+    <a href="#staff">RECRUIT</a>
   </div>
   <div class="copyright">© IDOL</div>
 </footer>
@@ -964,6 +967,32 @@
       }
     });
   });
+
+  var staffPhoto = document.querySelector('.staff-photo');
+  if(staffPhoto){
+    var staffImg = staffPhoto.querySelector('img');
+    if(staffImg){
+      staffPhoto.setAttribute('tabindex', '0');
+      staffPhoto.setAttribute('role', 'button');
+      staffPhoto.setAttribute('aria-label', (staffImg.alt || '画像') + ' を大きく表示');
+
+      var staffHint = document.createElement('div');
+      staffHint.className = 'zoom-hint';
+      staffHint.setAttribute('aria-hidden', 'true');
+      staffHint.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8.5" cy="8.5" r="5.5"></circle><line x1="8.5" y1="6" x2="8.5" y2="11" stroke-linecap="round"></line><line x1="6" y1="8.5" x2="11" y2="8.5" stroke-linecap="round"></line><line x1="12.8" y1="12.8" x2="17" y2="17" stroke-linecap="round"></line></svg>';
+      staffPhoto.appendChild(staffHint);
+
+      staffPhoto.addEventListener('click', function(){
+        openLightbox(staffImg, staffImg.alt || '');
+      });
+      staffPhoto.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          openLightbox(staffImg, staffImg.alt || '');
+        }
+      });
+    }
+  }
 
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', function(e){
