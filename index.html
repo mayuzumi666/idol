@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック</title>
-<meta name="description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。お仕事帰りの一杯から特別なひとときまで、寛げる大人の止まり木です。">
+<meta name="description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席、カラオケも完備。お仕事帰りの一杯から2次会まで、寛げる大人の止まり木です。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://idol-nishikasai.vercel.app/">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PUB & SNACK IDOL">
 <meta property="og:title" content="PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック">
-<meta property="og:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。お仕事帰りの一杯から特別なひとときまで、寛げる大人の止まり木です。">
+<meta property="og:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席、カラオケも完備。お仕事帰りの一杯から2次会まで、寛げる大人の止まり木です。">
 <meta property="og:url" content="https://idol-nishikasai.vercel.app/">
 <meta property="og:image" content="https://idol-nishikasai.vercel.app/店の入口.jpg">
 <meta property="og:locale" content="ja_JP">
@@ -21,7 +21,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PUB & SNACK IDOL(アイドルー)｜西葛西のパブ・スナック">
-<meta name="twitter:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。">
+<meta name="twitter:description" content="西葛西駅すぐ、パブ&スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席、カラオケも完備。">
 <meta name="twitter:image" content="https://idol-nishikasai.vercel.app/店の入口.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,7 +63,12 @@
     "closes": "02:00"
   },
   "servesCuisine": "Bar",
-  "description": "西葛西のパブ・スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席をご用意。"
+  "amenityFeature": {
+    "@type": "LocationFeatureSpecification",
+    "name": "カラオケ",
+    "value": true
+  },
+  "description": "西葛西のパブ・スナック IDOL(アイドルー)。青いビロードのメインフロアと落ち着いたVIP席、カウンター席、カラオケをご用意。2次会にもおすすめです。"
 }
 </script>
 <style>
@@ -456,7 +461,7 @@
     background:linear-gradient(to top, rgba(8,9,13,.92) 0%, rgba(8,9,13,.15) 55%, transparent 80%);
   }
   .room-card .tag{
-    position:absolute; left:22px; bottom:22px; z-index:2;
+    position:absolute; left:22px; right:22px; bottom:22px; z-index:2;
   }
   .room-card .tag .en{
     display:block;
@@ -465,6 +470,12 @@
   }
   .room-card .tag h3{
     font-size:23px; color:var(--cream);
+  }
+  .room-card .tag p{
+    margin:8px 0 0;
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.5;
   }
   .room-card.wine .tag .en{color:#e8b9c4;}
   .room-card .zoom-hint{
@@ -761,6 +772,7 @@
     <div class="about-copy">
       <p>IDOLは、東京都江戸川区・西葛西駅周辺で長くご愛顧いただいているパブ・スナックです。仕事帰りにふらりと立ち寄る一杯から、大切な人とのゆっくりした時間まで、その日の気分に合わせて過ごしていただけます。</p>
       <p>おひとり様もお気軽にご利用いただけるカウンター席と、仲間とゆっくり過ごしたい日のVIP席。同じ店の中に、少し違う二つの表情があります。どちらの席も、はじめての方にも常連の方にも、同じように寛いでいただけるようスタッフ一同ご用意しております。</p>
+      <p>盛り上がりたい夜は、自慢のカラオケでとことん歌って発散するのもおすすめです。2次会や仲間内の打ち上げにもぴったりの一軒です。</p>
       <p>「今日はちょっと疲れたな」という日にこそ、思い出していただけるお店でありたいと思っています。</p>
     </div>
   </div>
@@ -779,6 +791,7 @@
         <div class="tag">
           <span class="en">Bar Counter</span>
           <h3>カウンター席</h3>
+          <p>花々が彩るカウンターで、深いブルーのビロードチェアにゆったり腰かけて。おひとり様のご利用にもおすすめです。</p>
         </div>
       </div>
       <div class="room-card">
@@ -786,6 +799,7 @@
         <div class="tag">
           <span class="en">Main Floor</span>
           <h3>メインフロア</h3>
+          <p>ブルーのビロードソファが並ぶ、広々としたメインフロア。仲間との2次会やカラオケにもぴったりです。</p>
         </div>
       </div>
       <div class="room-card wine">
@@ -793,6 +807,15 @@
         <div class="tag">
           <span class="en">Private Room</span>
           <h3>VIP席</h3>
+          <p>落ち着いた色合いのソファが並ぶ個室風の一角。周りを気にせずゆっくり過ごしたい日に。</p>
+        </div>
+      </div>
+      <div class="room-card">
+        <img src="舞台.jpg" alt="IDOLの舞台" loading="lazy">
+        <div class="tag">
+          <span class="en">Stage</span>
+          <h3>舞台</h3>
+          <p>盛り上がりたい夜のための舞台スペース。写真は近日公開予定です。</p>
         </div>
       </div>
       <div class="room-card">
@@ -800,6 +823,7 @@
         <div class="tag">
           <span class="en">Entrance</span>
           <h3>店の入り口</h3>
+          <p>ネオンが灯る、西葛西の夜の目印。お気軽にお立ち寄りください。</p>
         </div>
       </div>
     </div>
@@ -817,7 +841,7 @@
       <div class="icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd"/></svg></div>
       <h3>営業時間</h3>
       <p><strong>20:00 〜 2:00</strong></p>
-      <p>日曜日・月曜日定休</p>
+      <p>日曜日・月曜日・祝日定休</p>
     </div>
     <div class="info-card">
       <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.5c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8z"/></svg></div>
