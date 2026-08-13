@@ -1084,7 +1084,14 @@
     // position as it moves, instead of only snapping into place once scrolling stops
     function updateVisualActive(){
       var closestDomIdx = closestDomIndex();
-      domSlides.forEach(function(s, i){ s.classList.toggle('is-active', i === closestDomIdx); });
+      // while resting on a clone, also grow/brighten its real counterpart in lockstep
+      // (same image, different element) — otherwise the real slide sits fully dimmed
+      // the whole time, and the silent clone->real handoff at the end of a wrap makes
+      // it visibly reset to dim/small for a frame before popping back up
+      var mirrorDomIdx = -1;
+      if(closestDomIdx === 0){ mirrorDomIdx = domSlides.length - 2; }
+      else if(closestDomIdx === domSlides.length - 1){ mirrorDomIdx = 1; }
+      domSlides.forEach(function(s, i){ s.classList.toggle('is-active', i === closestDomIdx || i === mirrorDomIdx); });
       var realIdx = realIndexFromDom(closestDomIdx);
       dots.forEach(function(d, i){ d.classList.toggle('is-active', i === realIdx); });
     }
