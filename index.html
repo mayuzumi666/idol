@@ -1018,6 +1018,9 @@
     var prevBtn = document.getElementById('carouselPrev');
     var nextBtn = document.getElementById('carouselNext');
     var activeIndex = 0;
+    var targetIndex = 0; // where we're heading, updated immediately on click (unlike activeIndex,
+                          // which only updates once an animation settles) so a rapid second click
+                          // advances from the intended destination instead of the stale current one
 
     // clone the first & last slides so stepping past either end feels seamless
     function makeClone(source){
@@ -1044,7 +1047,7 @@
       dot.type = 'button';
       dot.className = 'carousel-dot';
       dot.setAttribute('aria-label', (i + 1) + '枚目の画像へ');
-      dot.addEventListener('click', function(){ goToIndex(i); });
+      dot.addEventListener('click', function(){ if(scrollAnim){ return; } goToIndex(i); });
       dotsWrap.appendChild(dot);
     });
     var dots = Array.prototype.slice.call(dotsWrap.children);
@@ -1055,6 +1058,7 @@
 
     function setActive(realIdx){
       activeIndex = realIdx;
+      targetIndex = realIdx;
       domSlides.forEach(function(s, i){ s.classList.toggle('is-active', i === realIdx + 1); });
       dots.forEach(function(d, i){ d.classList.toggle('is-active', i === realIdx); });
     }
@@ -1085,17 +1089,20 @@
       dots.forEach(function(d, i){ d.classList.toggle('is-active', i === realIdx); });
     }
 
-    // used only for genuine manual swipes past either edge (no known target index)
+    // used to settle a genuine manual swipe: "proximity" snapping is soft and can leave
+    // the track resting between two slides, so glide the rest of the way to dead center
+    // ourselves instead of leaving it half-settled.
     function updateActiveFromScroll(){
       if(scrollAnim){ return; } // our own animation's onDone will handle the settle instead
       var closestDomIdx = closestDomIndex();
       var realIdx = realIndexFromDom(closestDomIdx);
-      setActive(realIdx);
-
-      // resting on a clone: silently snap to the equivalent real slide (imperceptible, same image)
-      if(closestDomIdx === 0 || closestDomIdx === domSlides.length - 1){
-        track.scrollLeft = slidePosition(domSlides[realIdx + 1]);
-      }
+      animateScrollTo(track, slidePosition(domSlides[closestDomIdx]), 260, function(){
+        setActive(realIdx);
+        // resting on a clone: silently snap to the equivalent real slide (imperceptible, same image)
+        if(closestDomIdx === 0 || closestDomIdx === domSlides.length - 1){
+          track.scrollLeft = slidePosition(domSlides[realIdx + 1]);
+        }
+      });
     }
 
     var scrollAnim = null;
@@ -1131,22 +1138,26 @@
 
     function goToIndex(i){
       var real = (i + realCount) % realCount;
+      targetIndex = real;
       animateScrollTo(track, slidePosition(domSlides[real + 1]), 900, function(){ setActive(real); });
     }
 
     function step(dir){
-      var next = activeIndex + dir;
+      var next = targetIndex + dir;
       if(next < 0){
+        targetIndex = realCount - 1;
         animateScrollTo(track, slidePosition(domSlides[0]), 900, function(){
           track.scrollLeft = slidePosition(domSlides[realCount]);
           setActive(realCount - 1);
         });
       } else if(next >= realCount){
+        targetIndex = 0;
         animateScrollTo(track, slidePosition(domSlides[domSlides.length - 1]), 900, function(){
           track.scrollLeft = slidePosition(domSlides[1]);
           setActive(0);
         });
       } else {
+        targetIndex = next;
         animateScrollTo(track, slidePosition(domSlides[next + 1]), 900, function(){ setActive(next); });
       }
     }
@@ -1158,8 +1169,8 @@
       scrollTimer = setTimeout(updateActiveFromScroll, 80);
     }, {passive:true});
 
-    if(prevBtn){ prevBtn.addEventListener('click', function(){ step(-1); }); }
-    if(nextBtn){ nextBtn.addEventListener('click', function(){ step(1); }); }
+    if(prevBtn){ prevBtn.addEventListener('click', function(){ if(scrollAnim){ return; } step(-1); }); }
+    if(nextBtn){ nextBtn.addEventListener('click', function(){ if(scrollAnim){ return; } step(1); }); }
 
     // start positioned on the first real slide (skip the prepended clone)
     track.scrollLeft = slidePosition(domSlides[1]);
